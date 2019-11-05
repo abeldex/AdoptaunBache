@@ -3,6 +3,7 @@ package com.uas.facite.adoptaunbache;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -52,11 +53,22 @@ public class RegistroActivity extends AppCompatActivity {
     //CLASE PARA HACER LA PETICION AL WEB SERVICE EN SEGUNDO PLANO
     class RegistroUsuario extends AsyncTask<Void, Void, String> {
         String nombre, usuario, password;
+        SweetAlertDialog pDialog = new SweetAlertDialog(RegistroActivity.this, SweetAlertDialog.PROGRESS_TYPE);
         //Constructor de la clase Usuario REgistro
         RegistroUsuario(String nombre, String usuario, String password){
             this.nombre = nombre;
             this.usuario = usuario;
             this.password = password;
+        }
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+            pDialog.setTitleText("Registrando Usuario...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
         }
         @Override
         protected String doInBackground(Void... voids) {
@@ -73,6 +85,7 @@ public class RegistroActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            pDialog.dismiss();
             //convertir la respuesta del web service a un objeto JSON
             try {
                 JSONObject obj = new JSONObject(s);

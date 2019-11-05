@@ -1,9 +1,11 @@
 package com.uas.facite.adoptaunbache;
 
 import androidx.appcompat.app.AppCompatActivity;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -59,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //CLASE PARA HACER LA PETICION AL WEB SERVICE EN SEGUNDO PLANO
     class UsuarioLogin extends AsyncTask<Void, Void, String>{
-        //ProgressBar barra;
+        SweetAlertDialog pDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.PROGRESS_TYPE);
         String usuario, password;
         //Constructor de la clase Usuario Login
         UsuarioLogin(String usuario, String password){
@@ -69,11 +71,17 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
-            //barra = findViewById()
+            pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+            pDialog.setTitleText("Iniciando Sesion");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
         }
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
+            //quitar la barra
+            pDialog.dismiss();
             try {
                 //convertir la respuesta del web service a un objeto JSON
                 JSONObject obj = new JSONObject(s);
@@ -82,13 +90,16 @@ public class LoginActivity extends AppCompatActivity {
                     //si el status del web service fue 0 entonces es un login correcto
                     Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
                     //Aqui pondremos el intent para que nos lleve al activity del mapa
-                    //Intent intent = new Intent(LoginActivity.this, MapBoxActivity.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(LoginActivity.this, MapBoxActivity.class);
+                    startActivity(intent);
                 }
                 else
                 {
-                    //quiere decir que el estatus fue 1 o 2
-                    Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                    //mandamos la alerta bonita con el error
+                    new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Ups!")
+                            .setContentText(obj.getString("message"))
+                            .show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
