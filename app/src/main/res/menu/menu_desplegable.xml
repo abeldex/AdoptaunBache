@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="nav_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_usuarios"
+            android:icon="@drawable/baseline_face_black_18dp"
+            android:title="Usuarios" />
+        <item
+            android:id="@+id/nav_baches"
+            android:icon="@drawable/baseline_confirmation_number_black_18dp"
+            android:title="Baches" />
+    </group>
+
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_config"
+            android:icon="@drawable/baseline_phonelink_setup_black_18dp"
+            android:title="Configuracion" />
+    </group>
+
+</menu>
