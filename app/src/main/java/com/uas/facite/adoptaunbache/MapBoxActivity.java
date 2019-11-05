@@ -3,7 +3,9 @@ package com.uas.facite.adoptaunbache;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -40,6 +42,7 @@ public class MapBoxActivity extends AppCompatActivity implements NavigationView.
 
     private NavigationView navegacion;
     private ImageButton botonMenu;
+
     private DrawerLayout drawer;
 
     @Override
@@ -162,6 +165,40 @@ public class MapBoxActivity extends AppCompatActivity implements NavigationView.
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
+        int id = menuItem.getItemId();
+        switch(id)
+        {
+            case R.id.nav_usuarios:
+                //mandamos la alerta bonita con el error
+                new SweetAlertDialog(MapBoxActivity.this, SweetAlertDialog.NORMAL_TYPE)
+                        .setTitleText("Navegacion")
+                        .setContentText("Activity para usuarios")
+                        .show();
+
+                break;
+            case R.id.nav_MapBox:
+                new SweetAlertDialog(MapBoxActivity.this, SweetAlertDialog.NORMAL_TYPE)
+                        .setTitleText("Navegacion")
+                        .setContentText("Activity para el mapa de baches")
+                        .show();
+                break;
+
+            case R.id.nav_google:
+                //abrir la ventana de google maps
+                Intent intent = new Intent(MapBoxActivity.this, MapsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_config:
+                new SweetAlertDialog(MapBoxActivity.this, SweetAlertDialog.NORMAL_TYPE)
+                        .setTitleText("Navegacion")
+                        .setContentText("Activity para la configuracion")
+                        .show();
+                break;
+            default:
+                return true;
+        }
+
+
+        return true;
     }
 }

@@ -5,12 +5,27 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_usuarios"
-            android:icon="@drawable/baseline_face_black_18dp"
+            android:icon="@drawable/baseline_face_24"
             android:title="Usuarios" />
         <item
-            android:id="@+id/nav_baches"
-            android:icon="@drawable/baseline_confirmation_number_black_18dp"
-            android:title="Baches" />
+            android:id="@+id/nav_MapBox"
+            android:icon="@drawable/mapbox"
+            android:title="MapBox" />
+
+        <item
+            android:id="@+id/nav_google"
+            android:icon="@drawable/google_maps"
+            android:title="Google Maps" />
+
+        <item
+            android:id="@+id/nav_osm"
+            android:icon="@drawable/osm"
+            android:title="OSM" />
+
+        <item
+            android:id="@+id/nav_arcgis"
+            android:icon="@drawable/esri"
+            android:title="ArcGis" />
     </group>
 
     <group
@@ -18,7 +33,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_config"
-            android:icon="@drawable/baseline_phonelink_setup_black_18dp"
+            android:icon="@drawable/baseline_phonelink_setup_24"
             android:title="Configuracion" />
     </group>
 
