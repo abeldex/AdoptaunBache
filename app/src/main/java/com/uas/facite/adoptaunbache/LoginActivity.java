@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.mapbox.mapboxsdk.Mapbox;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -90,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                     //si el status del web service fue 0 entonces es un login correcto
                     Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
                     //Aqui pondremos el intent para que nos lleve al activity del mapa
-                    Intent intent = new Intent(LoginActivity.this, MapBoxActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
                 else

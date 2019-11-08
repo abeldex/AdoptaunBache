@@ -34,7 +34,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //dependencia para google maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    //dependencia para utilizar GeoJsonLayer en google maps
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
 
     implementation 'com.android.support:support-annotations:+'
 
@@ -43,12 +47,17 @@ dependencies {
 
     //dependencia para openstreetmaps android
     implementation 'org.osmdroid:osmdroid-android:6.1.2'
+    //dependencia para cargar capas desde GeoJson
+    implementation 'com.github.MKergall:osmbonuspack:6.6.0'
+
     //dependencia para mapbox
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:8.4.0'
+
     //dependencia para Arcgis SDK
     implementation 'com.esri.arcgisruntime:arcgis-android:100.6.0'
 
     //dependencias para las alertas bonitas
     implementation 'com.github.f0ris.sweetalert:library:1.5.6'
+
 
 }

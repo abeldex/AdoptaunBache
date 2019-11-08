@@ -25,6 +25,9 @@ allprojects {
         maven {
             url 'https://esri.bintray.com/arcgis'
         }
+
+        //repositiorio para el osmbonuspack
+        maven { url "https://jitpack.io" }
     }
 }
 
