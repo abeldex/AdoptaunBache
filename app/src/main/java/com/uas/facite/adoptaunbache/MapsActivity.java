@@ -88,7 +88,7 @@ public class MapsActivity extends SupportMapFragment implements OnMapReadyCallba
         //CARGAR LOS PUNTOS DEL GeoJson de nuestra Api
         new CargarBaches().execute("http://facite.uas.edu.mx/adoptaunbache/api/getlugares.php");
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Culiacan, 12));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(Culiacan, 12));
 
 
     }

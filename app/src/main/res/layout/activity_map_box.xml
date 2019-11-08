@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".MapBoxActivity">
 
     <com.mapbox.mapboxsdk.maps.MapView
@@ -12,4 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/boton_agregar_mapbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:layout_anchor="@id/mapViewMapBox"
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@drawable/problem32" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,15 +3,21 @@ package com.uas.facite.adoptaunbache;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
@@ -21,6 +27,7 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.style.layers.CircleLayer;
+import com.mapbox.mapboxsdk.style.layers.Layer;
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
@@ -30,9 +37,16 @@ import java.net.URISyntaxException;
 
 
 public class MapBoxActivity extends Fragment {
-
+    //variables para el visor de mapbox
     private MapView mapa;
     private MapboxMap mapboxMap;
+
+    //variables para agregar los marcadores al mapa
+    private FloatingActionButton selectLocationButton;
+    private static final String DROPPED_MARKER_LAYER_ID = "DROPPED_MARKER_LAYER_ID";
+    private ImageView pinMarker;
+    private Layer droppedMarkerLayer;
+
 
     @Nullable
     @Override
@@ -43,6 +57,8 @@ public class MapBoxActivity extends Fragment {
         //creamos una instancia de mapbox
         Mapbox.getInstance(getActivity(),key);
         return inflater.inflate(R.layout.activity_map_box, container, false);
+
+
     }
 
     @Override
@@ -53,9 +69,21 @@ public class MapBoxActivity extends Fragment {
         mapa = getView().findViewById(R.id.mapViewMapBox);
         mapa.onCreate(savedInstanceState);
 
+
+
+
         mapa.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull MapboxMap mapboxMap) {
+                //referencia hacia el mapa
+                MapBoxActivity.this.mapboxMap = mapboxMap;
+                //Mostrar las indicaciones para agregar un marcador nuevo
+                new SweetAlertDialog(getActivity(), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                        .setTitleText("Instrucciones para Adoptar un Bache...")
+                        .setContentText("Para adoptar un bache posiciona el marcador en la ubicacion del mapa y presiona el boton de la parte inferior derecha")
+                        .setCustomImage(R.drawable.problem32)
+                        .show();
+
                 mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
                     @Override
                     public void onStyleLoaded(@NonNull Style style) {
@@ -76,6 +104,41 @@ public class MapBoxActivity extends Fragment {
                         BachesCapa.setProperties(PropertyFactory.iconImage("BACHE_ICONO"));
                         //Asignamos la capa de baches al mapa
                         style.addLayer(BachesCapa);
+
+                        //imagen para el pin que nos servira para agregaremos un nuevo punto al mapa
+                        pinMarker = new ImageView(getContext());
+                        pinMarker.setImageResource(R.drawable.location);
+                        //agregamos el pin al centro del mapa
+                        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                                ViewGroup.LayoutParams.WRAP_CONTENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+                        pinMarker.setLayoutParams(params);
+                        mapa.addView(pinMarker);
+                        // identificar el boton para agregar el marcador.
+                        selectLocationButton = getView().findViewById(R.id.boton_agregar_mapbox);
+                        selectLocationButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                final LatLng mapTargetLatLng = mapboxMap.getCameraPosition().target;
+                                //Mandamos un mensaje con la posicion de las coordenadas selecionadas
+                                new SweetAlertDialog(getActivity(), SweetAlertDialog.NORMAL_TYPE)
+                                        .setTitleText("¿Adoptar un bache en la posicion?")
+                                        .setContentText("Latitud: " + mapTargetLatLng.getLongitude() + " Longitud:" + mapTargetLatLng.getLatitude())
+                                        .setConfirmText("Si Adoptar!")
+                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                            @Override
+                                            public void onClick(SweetAlertDialog sDialog) {
+                                                sDialog
+                                                        .setTitleText("Excelente!")
+                                                        .setContentText("Acabas de adoptar un bache!")
+                                                        .setConfirmText("Yei")
+                                                        .setConfirmClickListener(null)
+                                                        .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                                            }
+                                        })
+                                        .show();
+                            }
+                        });
                     }
                 });
 
@@ -87,7 +150,7 @@ public class MapBoxActivity extends Fragment {
                         .build();
 
                 //mover la posicion del mapa
-                mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(posicion), 5000);
+                mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(posicion), 2000);
 
 
             }

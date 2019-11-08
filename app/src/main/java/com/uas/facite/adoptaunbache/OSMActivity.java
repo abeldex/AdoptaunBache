@@ -61,9 +61,12 @@ public class OSMActivity extends Fragment {
         map.setMultiTouchControls(true);
         //mover a un punto especifico del mapa
         IMapController mapController = map.getController();
-        mapController.setZoom(14);
+        //mapController.setZoom(14);
         GeoPoint startPoint = new GeoPoint(24.8206351, -107.380578);
         mapController.setCenter(startPoint);
+
+        mapController.zoomTo(14);
+        map.getController().animateTo(startPoint);
         //CARGAR LOS PUNTOS DEL GeoJson de nuestra Api
         new CargarBaches().execute("http://facite.uas.edu.mx/adoptaunbache/api/getlugares.php");
     }
