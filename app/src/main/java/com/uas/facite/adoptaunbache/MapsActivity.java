@@ -94,9 +94,14 @@ public class MapsActivity extends SupportMapFragment implements OnMapReadyCallba
     }
 
     private class CargarBaches extends AsyncTask<String, String, String> {
-
+        SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
         protected void onPreExecute() {
             super.onPreExecute();
+            //cargar progressbar
+            pDialog.getProgressHelper().setBarColor(Color.parseColor("#B87624"));
+            pDialog.setTitleText("Cargando Baches...");
+            pDialog.setCancelable(false);
+            pDialog.show();
         }
 
         protected String doInBackground(String... params) {
@@ -111,6 +116,8 @@ public class MapsActivity extends SupportMapFragment implements OnMapReadyCallba
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            //quitar la barra
+            pDialog.dismiss();
             //convertir la respuesta del web service a un objeto JSON
             try {
                 JSONObject lugares = new JSONObject(result);

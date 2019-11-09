@@ -8,6 +8,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -77,6 +78,7 @@ public class MapBoxActivity extends Fragment {
             public void onMapReady(@NonNull MapboxMap mapboxMap) {
                 //referencia hacia el mapa
                 MapBoxActivity.this.mapboxMap = mapboxMap;
+                SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
                 //Mostrar las indicaciones para agregar un marcador nuevo
                 new SweetAlertDialog(getActivity(), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
                         .setTitleText("Instrucciones para Adoptar un Bache...")
@@ -89,6 +91,11 @@ public class MapBoxActivity extends Fragment {
                     public void onStyleLoaded(@NonNull Style style) {
                         //CARGAR LOS PUNTOS DEL GeoJson de nuestra Api
                         try {
+                            //cargar progressbar
+                            pDialog.getProgressHelper().setBarColor(Color.parseColor("#B87624"));
+                            pDialog.setTitleText("Cargando Baches...");
+                            pDialog.setCancelable(false);
+                            pDialog.show();
                             style.addSource(new GeoJsonSource("GEOJSON_PUNTOS",
                                     new URI("http://facite.uas.edu.mx/adoptaunbache/api/getlugares.php")));
                         } catch (URISyntaxException e) {
@@ -104,16 +111,18 @@ public class MapBoxActivity extends Fragment {
                         BachesCapa.setProperties(PropertyFactory.iconImage("BACHE_ICONO"));
                         //Asignamos la capa de baches al mapa
                         style.addLayer(BachesCapa);
-
+                        //quitar la barra
+                        pDialog.dismiss();
                         //imagen para el pin que nos servira para agregaremos un nuevo punto al mapa
                         pinMarker = new ImageView(getContext());
-                        pinMarker.setImageResource(R.drawable.location);
+                        pinMarker.setImageResource(R.drawable.ic_pinwarning);
                         //agregamos el pin al centro del mapa
                         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                                 ViewGroup.LayoutParams.WRAP_CONTENT,
                                 ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
                         pinMarker.setLayoutParams(params);
                         mapa.addView(pinMarker);
+
                         // identificar el boton para agregar el marcador.
                         selectLocationButton = getView().findViewById(R.id.boton_agregar_mapbox);
                         selectLocationButton.setOnClickListener(new View.OnClickListener() {

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -38,6 +39,12 @@ public class RegistroActivity extends AppCompatActivity {
                 registrarUsuario();
             }
         });
+
+        //hacer la notification bar transparente
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        );
     }
     //MEtodo para realizar el registro en segundo plano
     private void registrarUsuario(){

@@ -23,15 +23,14 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15px"
+                android:layout_marginTop="80px"
                 android:layout_marginLeft="10px"
                 android:layout_marginRight="10px"
-                app:cardBackgroundColor="#ffffff"
-                app:cardCornerRadius="5dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="10dp"
                 app:cardElevation="5dp">
 
                 <LinearLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -76,7 +75,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
+        android:fitsSystemWindows="false"
+        app:itemIconTint="@color/colorAccent"
         app:headerLayout="@layout/nav_header_home"
         app:menu="@menu/menu_desplegable" />
 

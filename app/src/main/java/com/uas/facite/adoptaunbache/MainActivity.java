@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 
 import com.google.android.material.navigation.NavigationView;
@@ -46,6 +47,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Fragmento inicial de la aplicacion
         setFragment(3);
+
+        //hacer la notification bar transparente
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        );
     }
 
     public void setFragment(int position) {
