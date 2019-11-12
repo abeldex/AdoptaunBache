@@ -99,6 +99,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentTransaction.commit();
                 drawer.closeDrawer(Gravity.LEFT);
                 break;
+            case 5:
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                TransporteActivity TransporteFragment = new TransporteActivity();
+                fragmentTransaction.replace(R.id.fragment, TransporteFragment);
+                fragmentTransaction.commit();
+                drawer.closeDrawer(Gravity.LEFT);
+                break;
         }
     }
 
@@ -127,6 +135,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_arcgis:
                 //abrir la ventana de google maps
                 setFragment(2);
+                break;
+            case R.id.nav_rutas:
+                //abrir la ventana de google maps
+                setFragment(5);
                 break;
             default:
                 return true;

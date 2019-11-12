@@ -29,9 +29,15 @@ import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.style.layers.CircleLayer;
 import com.mapbox.mapboxsdk.style.layers.Layer;
+import com.mapbox.mapboxsdk.style.layers.LineLayer;
+import com.mapbox.mapboxsdk.style.layers.Property;
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
+import static com.mapbox.mapboxsdk.style.expressions.Expression.get;
+import static com.mapbox.mapboxsdk.style.expressions.Expression.match;
+import static com.mapbox.mapboxsdk.style.expressions.Expression.rgb;
+import static com.mapbox.mapboxsdk.style.expressions.Expression.stop;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -69,9 +75,8 @@ public class MapBoxActivity extends Fragment {
         //identificamos el visor de nuestro diseño
         mapa = getView().findViewById(R.id.mapViewMapBox);
         mapa.onCreate(savedInstanceState);
-
-
-
+        //obtener los datos cachados si es que se enviaron
+        Bundle bundle = this.getArguments();
 
         mapa.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -80,12 +85,12 @@ public class MapBoxActivity extends Fragment {
                 MapBoxActivity.this.mapboxMap = mapboxMap;
                 SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
                 //Mostrar las indicaciones para agregar un marcador nuevo
-                new SweetAlertDialog(getActivity(), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                /*new SweetAlertDialog(getActivity(), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
                         .setTitleText("Instrucciones para Adoptar un Bache...")
                         .setContentText("Para adoptar un bache posiciona el marcador en la ubicacion del mapa y presiona el boton de la parte inferior derecha")
                         .setCustomImage(R.drawable.problem32)
                         .show();
-
+                */
                 mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
                     @Override
                     public void onStyleLoaded(@NonNull Style style) {
@@ -98,6 +103,25 @@ public class MapBoxActivity extends Fragment {
                             pDialog.show();
                             style.addSource(new GeoJsonSource("GEOJSON_PUNTOS",
                                     new URI("http://facite.uas.edu.mx/adoptaunbache/api/getlugares.php")));
+
+                            if(bundle != null){
+                                // handle your code here.
+                                //cargar la ruta
+                                style.addSource(new GeoJsonSource("GEOJSON_RUTA_BARRA",
+                                        new URI("http://facite.uas.edu.mx/transportes/api/get_ruta.php?id=" + bundle.get("ruta_id"))));
+
+                                // The layer properties for our line. This is where we make the line dotted, set the color, etc.
+                                style.addLayer(new LineLayer("layerruta", "GEOJSON_RUTA_BARRA").withProperties(
+                                        PropertyFactory.lineColor(
+                                                match(get("color"), rgb(35, 152, 239),
+                                                        stop("red", rgb(247, 69, 93)),
+                                                        stop("blue", rgb(51, 201, 235)))),
+                                        PropertyFactory.visibility(Property.VISIBLE),
+                                        PropertyFactory.lineWidth(3f)
+                                ));
+
+                            }
+
                         } catch (URISyntaxException e) {
                            Log.i("ERROR GEOJSON:", e.toString());
                         }
@@ -111,6 +135,8 @@ public class MapBoxActivity extends Fragment {
                         BachesCapa.setProperties(PropertyFactory.iconImage("BACHE_ICONO"));
                         //Asignamos la capa de baches al mapa
                         style.addLayer(BachesCapa);
+                        //Agregar capa de la ruta
+
                         //quitar la barra
                         pDialog.dismiss();
                         //imagen para el pin que nos servira para agregaremos un nuevo punto al mapa
