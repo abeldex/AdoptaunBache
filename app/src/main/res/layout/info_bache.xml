@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mapbox.mapboxsdk.annotations.BubbleLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="6dp"
+    android:paddingEnd="8dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingStart="8dp"
+    app:mapbox_bl_arrowDirection="bottom"
+    app:mapbox_bl_arrowHeight="8dp"
+    app:mapbox_bl_arrowPosition="16dp"
+    app:mapbox_bl_arrowWidth="8dp"
+    app:mapbox_bl_bubbleColor="@android:color/white"
+    app:mapbox_bl_cornersRadius="6dp"
+    app:mapbox_bl_strokeColor="@android:color/darker_gray"
+    app:mapbox_bl_strokeWidth="1dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <androidx.cardview.widget.CardView
+            android:id="@+id/roundCardView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:elevation="0dp"
+            app:cardCornerRadius="90dp">
+            <ImageView
+                android:id="@+id/MarcadorImagen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@android:drawable/ic_menu_add" />
+        </androidx.cardview.widget.CardView>
+
+
+
+        <RelativeLayout
+            android:id="@+id/text_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/roundCardView"
+            android:layout_toRightOf="@id/roundCardView"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="Direccion Bache" />
+
+            <TextView
+                android:id="@+id/style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/title"
+                android:layout_alignRight="@id/title"
+                android:layout_below="@id/title"
+                android:layout_marginTop="2dp"
+                android:text="Cod"
+                android:textSize="10sp"
+                android:textStyle="italic" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</com.mapbox.mapboxsdk.annotations.BubbleLayout>

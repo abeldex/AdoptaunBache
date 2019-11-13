@@ -13,20 +13,25 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.google.android.material.navigation.NavigationView;
+import com.mapbox.android.accounts.v1.MapboxAccounts;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private NavigationView navegacion;
     private ImageButton botonMenu;
+    private ImageButton botonBuscar;
     private DrawerLayout drawer;
+    private EditText txtDireccion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        txtDireccion = (EditText)findViewById(R.id.search_text);
         //identificamos el drawer layout
         drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         //identificamos el diseño del menu lateral
@@ -42,6 +47,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     drawer.closeDrawer(Gravity.LEFT);
                 else
                     drawer.openDrawer(Gravity.LEFT);
+            }
+        });
+
+        //identificamos el boton buscar
+        botonBuscar = (ImageButton)findViewById(R.id.botonBuscar);
+
+        //aplicamos el evento del botonBuscar
+        botonBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MapBoxActivity MapboxFragment = (MapBoxActivity)getSupportFragmentManager().findFragmentById(R.id.fragment);
+                //String dir = MapboxFragment.obtenerDireccion();
+                //txtDireccion.setText(dir);
             }
         });
 

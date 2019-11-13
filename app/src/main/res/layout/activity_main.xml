@@ -51,7 +51,7 @@
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:hint="Adopta un Bache"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@android:color/darker_gray"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                         android:background="@android:color/transparent">
                     </EditText>

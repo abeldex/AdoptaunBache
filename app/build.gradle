@@ -52,6 +52,7 @@ dependencies {
 
     //dependencia para mapbox
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:8.4.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-services:4.9.0'
 
     //dependencia para Arcgis SDK
     implementation 'com.esri.arcgisruntime:arcgis-android:100.6.0'

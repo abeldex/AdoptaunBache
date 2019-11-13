@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:name="fragment"
     tools:context=".MapBoxActivity">
 
     <com.mapbox.mapboxsdk.maps.MapView
@@ -22,5 +23,8 @@
         app:layout_anchor="@id/mapViewMapBox"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/problem32" />
+
+    <!-- Adding bottom sheet after main content -->
+    <include layout="@layout/bottom_sheet"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
